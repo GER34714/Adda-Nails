@@ -15,7 +15,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="Adda Nails — Beauty Studio 💅✨" />
   <meta property="og:description" content="Manicuría profesional con Adda Nails 💅 Soft Gel, Semipermanente y Kapping Gel. Horario 09:00–16:00 hs. Turnos por WhatsApp." />
-  <meta property="og:image" content="https://iili.io/Kgx1opp.md.jpg" />
+  <meta property="og:image" content="https://iili.io/Kg7MF9I.md.jpg" />
   <meta property="og:url" content="https://adda-nails.onrender.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Adda Nails" />
@@ -25,19 +25,20 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Adda Nails — Beauty Studio 💅✨" />
   <meta name="twitter:description" content="Soft Gel, Semipermanente y Kapping Gel. Horario 09:00–16:00 hs. Turnos por WhatsApp." />
-  <meta name="twitter:image" content="https://iili.io/Kgx1opp.md.jpg" />
+  <meta name="twitter:image" content="https://iili.io/Kg7MF9I.md.jpg" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://iili.io/Kgx1opp.md.jpg" />
+  <link rel="icon" type="image/png" href="https://iili.io/Kg7MF9I.md.jpg" />
 
   <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
-  <!-- Fuente personalizada para el encabezado -->
+  <!-- Fuente personalizada SOLO para el encabezado -->
   <style>
     @font-face {
       font-family: 'MyteriScript';
       src: url('MyteriScript_PERSONAL_USE_ONLY.otf') format('opentype');
+      font-display: swap;
     }
 
     :root{
@@ -62,6 +63,7 @@
       overflow-x:hidden;
     }
 
+    /* HEADER con glitter */
     header{
       text-align:center;
       padding:80px 20px 40px;
@@ -70,6 +72,7 @@
       overflow:hidden;
     }
 
+    /* Glitter animado */
     .glitter{
       position:absolute;
       inset:0;
@@ -90,6 +93,7 @@
       0%,100%{transform:translateY(0) scale(1);opacity:0.4;}
       50%{transform:translateY(-12px) scale(1.4);opacity:1;}
     }
+    /* Generar destellos aleatorios */
     .spark:nth-child(1){top:10%;left:15%;animation-delay:0s;}
     .spark:nth-child(2){top:40%;left:25%;animation-delay:1.5s;}
     .spark:nth-child(3){top:70%;left:50%;animation-delay:2.8s;}
@@ -97,7 +101,19 @@
     .spark:nth-child(5){top:60%;left:85%;animation-delay:5.6s;}
     .spark:nth-child(6){top:20%;left:55%;animation-delay:3.2s;}
 
-    /* SOLO CAMBIO AQUÍ ↓↓↓ */
+    /* Estilo para la imagen de logo (agregada, no modifica nada más) */
+    .logo-img{
+      width:120px;
+      height:120px;
+      object-fit:cover;
+      border-radius:50%;
+      box-shadow:0 8px 20px var(--shadow);
+      border:3px solid #fff;
+      display:block;
+      margin:0 auto 10px;
+    }
+
+    /* SOLO cambio: fuente y brillo en el encabezado (.logo) */
     .logo{
       position:relative;
       z-index:1;
@@ -110,7 +126,7 @@
         0 0 12px rgba(255, 215, 0, 0.3),
         0 0 18px rgba(255, 215, 0, 0.2);
     }
-    /* ↑↑↑ SOLO el encabezado usa la nueva fuente y brillo */
+    /* FIN: solo .logo usa MyteriScript y el brillo dorado */
 
     .sub{color:var(--muted);margin-top:6px;font-size:16px;position:relative;z-index:1;}
     .cta{
@@ -130,6 +146,7 @@
     }
     .cta:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(255,95,176,.32)}
 
+    /* INFO */
     .pillbox{
       display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
       max-width:500px;margin:28px auto 0;position:relative;z-index:1;
@@ -144,6 +161,7 @@
       box-shadow:0 6px 18px var(--shadow);
     }
 
+    /* SECCIONES */
     section{max-width:980px;margin:40px auto;padding:0 20px}
     .section{
       background:var(--card);
@@ -173,6 +191,7 @@
       background:#fffaf0;color:#6b5a2a;border-radius:10px;font-size:14px
     }
 
+    /* GALERÍA */
     .gallery{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -189,6 +208,7 @@
     .work img{width:100%;height:220px;object-fit:cover;display:block}
     .work p{text-align:center;padding:8px;color:var(--fg);font-weight:600;background:#fff}
 
+    /* SOCIAL */
     .social{text-align:center;margin-top:20px}
     .social a{
       display:inline-flex;align-items:center;gap:10px;
@@ -198,6 +218,7 @@
     }
     .social a img{width:24px;height:24px}
 
+    /* WHATSAPP FAB */
     .wa-fab{
       position:fixed;right:16px;bottom:16px;z-index:10;
       width:60px;height:60px;border-radius:50%;
@@ -222,6 +243,9 @@
       <div class="spark"></div>
       <div class="spark"></div>
     </div>
+
+    <!-- LOGO IMAGE (agregada) -->
+    <img class="logo-img" src="https://iili.io/Kg7MF9I.md.jpg" alt="Adda Nails logo">
 
     <div class="logo">Adda Nails</div>
     <p class="sub">Beauty Studio 💅✨</p>
@@ -269,20 +293,20 @@
     </div>
 
     <div class="social">
-      <a href="https://www.instagram.com/addanails__?igsh=MWNuZzdmYXo3Njd5Mw==" target=\"_blank\">
-        <img src=\"https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png\" alt=\"Instagram\">
+      <a href="https://www.instagram.com/addanails__?igsh=MWNuZzdmYXo3Njd5Mw==" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
         Ver más trabajos en Instagram
       </a>
     </div>
   </section>
 
-  <a class=\"wa-fab\" href=\"https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85\" target=\"_blank\">
-    <img src=\"https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg\" alt=\"WhatsApp\">
+  <a class="wa-fab" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
   </a>
 
   <footer>
-    © <span id=\"year\"></span> Adda Nails — Beauty Studio
-    <div style=\"margin-top:6px;\">Diseño web por CIBORG 347™</div>
+    © <span id="year"></span> Adda Nails — Beauty Studio
+    <div style="margin-top:6px;">Diseño web por CIBORG 347™</div>
   </footer>
 
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
