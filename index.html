@@ -30,15 +30,14 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://iili.io/Kgx1opp.md.jpg" />
 
-  <!-- Tipografía general -->
+  <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
-  <!-- Tipografía personalizada Myteri Script -->
+  <!-- Fuente personalizada para el encabezado -->
   <style>
     @font-face {
       font-family: 'MyteriScript';
-      src: url('./MyteriScript_PERSONAL_USE_ONLY.otf') format('opentype');
-      font-display: swap;
+      src: url('MyteriScript_PERSONAL_USE_ONLY.otf') format('opentype');
     }
 
     :root{
@@ -63,7 +62,6 @@
       overflow-x:hidden;
     }
 
-    /* HEADER con glitter */
     header{
       text-align:center;
       padding:80px 20px 40px;
@@ -72,7 +70,6 @@
       overflow:hidden;
     }
 
-    /* Glitter animado */
     .glitter{
       position:absolute;
       inset:0;
@@ -100,17 +97,20 @@
     .spark:nth-child(5){top:60%;left:85%;animation-delay:5.6s;}
     .spark:nth-child(6){top:20%;left:55%;animation-delay:3.2s;}
 
-    /* LOGO personalizado */
+    /* SOLO CAMBIO AQUÍ ↓↓↓ */
     .logo{
       position:relative;
       z-index:1;
       font-family:'MyteriScript', cursive;
-      font-weight:400;
-      font-size:58px;
+      font-size:56px;
       color:var(--accent);
       letter-spacing:1px;
-      text-shadow:2px 2px 6px rgba(255,95,176,.25);
+      text-shadow:
+        0 0 6px rgba(255, 215, 0, 0.5),
+        0 0 12px rgba(255, 215, 0, 0.3),
+        0 0 18px rgba(255, 215, 0, 0.2);
     }
+    /* ↑↑↑ SOLO el encabezado usa la nueva fuente y brillo */
 
     .sub{color:var(--muted);margin-top:6px;font-size:16px;position:relative;z-index:1;}
     .cta{
@@ -130,7 +130,6 @@
     }
     .cta:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(255,95,176,.32)}
 
-    /* INFO */
     .pillbox{
       display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
       max-width:500px;margin:28px auto 0;position:relative;z-index:1;
@@ -216,13 +215,17 @@
 
   <header>
     <div class="glitter">
-      <div class="spark"></div><div class="spark"></div><div class="spark"></div>
-      <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
     </div>
 
     <div class="logo">Adda Nails</div>
     <p class="sub">Beauty Studio 💅✨</p>
-    <a class="cta" href="https://wa.me/5491123008455?text=Hola%20como estas?!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank">💬 Reservá tu turno</a>
+    <a class="cta" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank">💬 Reservá tu turno</a>
 
     <div class="pillbox">
       <div class="pill">🕘 09:00 a 16:00 hs</div>
@@ -230,10 +233,56 @@
     </div>
   </header>
 
-  <!-- resto del contenido igual -->
+  <section class="section">
+    <h2>Servicios</h2>
+    <p class="muted">Soft Gel, Semipermanente y Kapping Gel con terminaciones perfectas.</p>
+
+    <div class="services">
+      <div class="card"><h3>Soft Gel</h3><p>Extensiones livianas y resistentes para un largo impecable y natural.</p></div>
+      <div class="card"><h3>Semipermanente</h3><p>Color duradero y brillante. Ideal para mantener tus manos impecables.</p></div>
+      <div class="card"><h3>Kapping Gel</h3><p>Refuerzo para proteger y fortalecer la uña natural.</p></div>
+    </div>
+
+    <div class="note">
+      🚗 Servicio a domicilio con costo adicional según la distancia.<br>
+      💖 Precios accesibles y atención personalizada.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Ver trabajos</h2>
+    <p class="muted">Algunos de los diseños realizados recientemente 💅</p>
+
+    <div class="gallery">
+      <div class="work">
+        <img src="https://iili.io/KgxuOXf.md.jpg" alt="Soft Gel">
+        <p>Soft Gel</p>
+      </div>
+      <div class="work">
+        <img src="https://iili.io/Kgx1opp.md.jpg" alt="Kapping Gel">
+        <p>Kapping Gel</p>
+      </div>
+      <div class="work">
+        <img src="https://iili.io/KgxXrPI.md.jpg" alt="Semipermanente">
+        <p>Semipermanente</p>
+      </div>
+    </div>
+
+    <div class="social">
+      <a href="https://www.instagram.com/addanails__?igsh=MWNuZzdmYXo3Njd5Mw==" target=\"_blank\">
+        <img src=\"https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png\" alt=\"Instagram\">
+        Ver más trabajos en Instagram
+      </a>
+    </div>
+  </section>
+
+  <a class=\"wa-fab\" href=\"https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85\" target=\"_blank\">
+    <img src=\"https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg\" alt=\"WhatsApp\">
+  </a>
+
   <footer>
-    © <span id="year"></span> Adda Nails — Beauty Studio
-    <div style="margin-top:6px;">Diseño web por CIBORG 347™</div>
+    © <span id=\"year\"></span> Adda Nails — Beauty Studio
+    <div style=\"margin-top:6px;\">Diseño web por CIBORG 347™</div>
   </footer>
 
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
