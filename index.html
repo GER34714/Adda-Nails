@@ -33,65 +33,108 @@
   <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
-  <!-- Fuente personalizada SOLO para el encabezado -->
   <style>
-    @font-face {
-      font-family: 'MyteriScript';
-      src: url('MyteriScript_PERSONAL_USE_ONLY.otf') format('opentype');
-      font-display: swap;
+    @font-face{
+      font-family:'MyteriScript';
+      src:url('MyteriScript_PERSONAL_USE_ONLY.otf') format('opentype');
+      font-display:swap;
     }
 
     :root{
-      --bg: #fff7fb;
-      --fg: #443a45;
-      --accent: #ff5fb0;
-      --accent2: #ffd1e8;
-      --gold: #c9a14a;
-      --muted: #7b6f78;
-      --card: #ffffff;
-      --shadow: rgba(170, 0, 102, 0.08);
-      --whatsapp: #25D366;
+      --bg:#fff7fb;
+      --fg:#443a45;
+      --accent:#ff5fb0;
+      --accent2:#ffd1e8;
+      --gold:#c9a14a;
+      --muted:#7b6f78;
+      --shadow:rgba(170,0,102,.10);
+      --whatsapp:#25D366;
+
+      /* OVERLAY GLOBAL (SIN OPACIDAD) */
+      --overlay-url:url("https://iili.io/fmve0dX.jpg");
+      --overlay-opacity:1;
+
+      /* HEADER BG */
+      --header-bg:url("https://iili.io/fm8uTfS.jpg");
+
+      /* TARJETAS (más sólidas para que se lea con overlay full) */
+      --glass:rgba(255,255,255,.92);
+      --glass-strong:rgba(255,255,255,.94);
+      --glass-border:rgba(242,230,238,.97);
+      --card-bg:rgba(255,255,255,.94);
+      --card-bg-strong:rgba(255,255,255,.96);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
       font-family:'Poppins',sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
+      background:var(--bg);
+      color:var(--fg);
+      line-height:1.6;
       overflow-x:hidden;
+      position:relative;
+    }
+
+    /* OVERLAY GLOBAL FULL */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:var(--overlay-url);
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      opacity:var(--overlay-opacity);
+      z-index:-3;
+      pointer-events:none;
+      transform:translateZ(0);
+    }
+
+    /* capa suave para que el texto no se pierda con overlay full */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,247,251,.62), rgba(255,247,251,.48));
+      z-index:-2;
+      pointer-events:none;
     }
 
     header{
       text-align:center;
       padding:80px 20px 40px;
       position:relative;
-      background: radial-gradient(circle at 30% 20%, #fff0f6, #fff7fb 80%);
       overflow:hidden;
+      border-bottom:1px solid rgba(242,230,238,.88);
+
+      /* Fondo del header más “contenido” (menos zoom) */
+      background-image: var(--header-bg);
+      background-repeat:no-repeat;
+      background-position: center top;
+      background-size: min(1100px, 100%) auto;
+      background-color: rgba(255,247,251,.85);
     }
 
-    .glitter{
+    header::before{
+      content:"";
       position:absolute;
       inset:0;
-      overflow:hidden;
-      pointer-events:none;
+      background:radial-gradient(circle at 30% 20%, rgba(255,240,246,.72), rgba(255,247,251,.62) 80%);
       z-index:0;
-    }
-    .spark{
-      position:absolute;
-      width:6px;
-      height:6px;
-      background:radial-gradient(circle, rgba(255,182,220,1) 0%, rgba(255,182,220,0) 80%);
-      border-radius:50%;
-      opacity:0.6;
-      animation:twinkle 6s infinite ease-in-out;
-    }
-    @keyframes twinkle{
-      0%,100%{transform:translateY(0) scale(1);opacity:0.4;}
-      50%{transform:translateY(-12px) scale(1.4);opacity:1;}
+      pointer-events:none;
     }
 
+    .glitter{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.9}
+    .spark{
+      position:absolute;width:6px;height:6px;border-radius:50%;
+      background:radial-gradient(circle, rgba(255,182,220,1) 0%, rgba(255,182,220,0) 80%);
+      opacity:.6;animation:twinkle 6s infinite ease-in-out;
+    }
+    @keyframes twinkle{
+      0%,100%{transform:translateY(0) scale(1);opacity:.35;}
+      50%{transform:translateY(-12px) scale(1.4);opacity:.95;}
+    }
     .spark:nth-child(1){top:10%;left:15%;animation-delay:0s;}
     .spark:nth-child(2){top:40%;left:25%;animation-delay:1.5s;}
     .spark:nth-child(3){top:70%;left:50%;animation-delay:2.8s;}
@@ -99,43 +142,29 @@
     .spark:nth-child(5){top:60%;left:85%;animation-delay:5.6s;}
     .spark:nth-child(6){top:20%;left:55%;animation-delay:3.2s;}
 
-    /* LOGO mucho más grande */
     .logo-img{
-      width:300px;
-      height:300px;
-      object-fit:cover;
-      border-radius:70%;
+      width:300px;height:300px;object-fit:cover;border-radius:70%;
       box-shadow:0 10px 30px var(--shadow);
-      border:4px solid #fff;
-      display:block;
-      margin:0 auto 20px;
-      transition: transform 0.3s ease;
+      border:4px solid rgba(255,255,255,.95);
+      display:block;margin:0 auto 20px;
+      transition:transform .3s ease;
+      position:relative;z-index:2;
     }
-    .logo-img:hover{
-      transform:scale(1.05);
-    }
+    .logo-img:hover{transform:scale(1.05);}
 
     .logo{
-      position:relative;
-      z-index:1;
+      position:relative;z-index:2;
       font-family:'MyteriScript', cursive;
-      font-size:64px;
-      color:var(--accent);
-      letter-spacing:1px;
-      text-shadow:
-        0 0 6px rgba(255, 215, 0, 0.5),
-        0 0 12px rgba(255, 215, 0, 0.3),
-        0 0 18px rgba(255, 215, 0, 0.2);
+      font-size:64px;color:var(--accent);letter-spacing:1px;
+      text-shadow:0 0 6px rgba(255,215,0,.5),0 0 12px rgba(255,215,0,.3),0 0 18px rgba(255,215,0,.2);
     }
-
-    .sub{color:var(--muted);margin-top:6px;font-size:16px;position:relative;z-index:1;}
+    .sub{color:rgba(123,111,120,.92);margin-top:6px;font-size:16px;position:relative;z-index:2;}
 
     .promo-text{
-      margin-top:18px;
-      font-size:18px;
-      font-weight:600;
-      color:var(--accent);
+      margin-top:18px;font-size:18px;font-weight:700;color:var(--accent);
       animation:fadeSlide 8s infinite;
+      position:relative;z-index:2;
+      text-shadow:0 2px 8px rgba(255,255,255,.65);
     }
     @keyframes fadeSlide{
       0%{opacity:0;transform:translateY(10px);}
@@ -145,16 +174,11 @@
     }
 
     .cta{
-      position:relative;
-      z-index:1;
-      display:inline-block;
-      margin-top:25px;
-      padding:14px 26px;
-      border-radius:999px;
-      font-weight:700;
-      text-decoration:none;
-      border:2.5px solid transparent;
-      color:white;
+      position:relative;z-index:2;
+      display:inline-block;margin-top:25px;
+      padding:14px 26px;border-radius:999px;
+      font-weight:800;text-decoration:none;
+      border:2.5px solid transparent;color:#fff;
       background:linear-gradient(90deg,#ff7fbd,#ff5fb0,#ff8acb);
       box-shadow:0 10px 24px rgba(255,95,176,.25);
       transition:transform .15s ease, box-shadow .15s ease;
@@ -163,96 +187,212 @@
 
     .pillbox{
       display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      max-width:500px;margin:28px auto 0;position:relative;z-index:1;
+      max-width:500px;margin:28px auto 0;
+      position:relative;z-index:2;
     }
     .pill{
-      background:var(--card);
-      border:1px solid #f2e6ee;
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:14px;
-      color:var(--muted);
+      background:var(--glass-strong);
+      border:1px solid var(--glass-border);
+      border-radius:999px;padding:10px 14px;
+      font-size:14px;color:var(--muted);
       box-shadow:0 6px 18px var(--shadow);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     }
 
     section{max-width:980px;margin:40px auto;padding:0 20px}
     .section{
-      background:var(--card);
-      border:1px solid #f2e6ee;
+      background:var(--glass);
+      border:1px solid var(--glass-border);
       border-radius:16px;
       box-shadow:0 8px 30px var(--shadow);
       padding:24px;
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     }
 
     h2{text-align:center;color:var(--fg);margin-bottom:10px;font-size:24px}
     .muted{text-align:center;color:var(--muted);margin-bottom:20px}
 
     .services{
-      display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      display:grid;gap:16px;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
     }
+
     .card{
-      border:1px solid #f2e6ee;
+      border:1px solid var(--glass-border);
       border-radius:14px;
       padding:16px;
-      background:linear-gradient(180deg,#fff,#fff9fc);
+      background:var(--card-bg);
       box-shadow:0 6px 18px var(--shadow);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     }
     .card h3{color:#574355;margin-bottom:6px}
     .card p{color:var(--muted);font-size:14px}
 
     .note{
-      margin-top:16px;padding:12px 14px;border-left:3px solid var(--gold);
-      background:#fffaf0;color:#6b5a2a;border-radius:10px;font-size:14px
+      margin-top:16px;
+      padding:12px 14px;
+      border-left:3px solid var(--gold);
+      background:rgba(255,250,240,.94);
+      color:#6b5a2a;
+      border-radius:10px;
+      font-size:14px;
+      border:1px solid rgba(242,230,238,.92);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    }
+
+    /* PRESS ON */
+    .presson-head{
+      display:flex;align-items:flex-start;justify-content:space-between;
+      gap:14px;flex-wrap:wrap;margin-bottom:14px;
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--glass-border);
+      background:rgba(255,242,248,.90);
+      box-shadow:0 6px 18px var(--shadow);
+      color:#7b4d67;font-weight:800;font-size:13px;white-space:nowrap;
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    }
+    .presson-sub{color:var(--muted);font-size:14px;margin-top:6px;text-align:center;}
+    .presson-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:12px 16px;border-radius:999px;
+      font-weight:900;text-decoration:none;border:2px solid transparent;
+      box-shadow:0 10px 24px rgba(255,95,176,.18);
+      transition:transform .15s ease, box-shadow .15s ease;
+      font-size:14px;min-width:210px;text-align:center;
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(255,95,176,.24)}
+    .btn-primary{color:#fff;background:linear-gradient(90deg,#ff7fbd,#ff5fb0,#ff8acb);}
+    .btn-ghost{
+      color:#6a2e4a;background:var(--card-bg);
+      border-color:var(--glass-border);
+      box-shadow:0 8px 20px var(--shadow);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    }
+
+    .steps{
+      display:grid;gap:12px;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      margin-top:14px;
+    }
+    .step{
+      border:1px dashed rgba(240,214,228,.98);
+      border-radius:14px;padding:14px;
+      background:var(--card-bg);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    }
+    .step b{display:block;color:#574355;margin-bottom:4px}
+    .step span{color:var(--muted);font-size:13px}
+
+    .pressGallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+      margin-top:14px;
+    }
+    .imgWrap{
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 16px var(--shadow);
+      transition:transform .25s ease, box-shadow .25s ease;
+      border:1px solid var(--glass-border);
+      background:var(--card-bg-strong);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      position:relative;
+    }
+    .imgWrap:hover{transform:scale(1.03);box-shadow:0 10px 22px rgba(0,0,0,.12)}
+    .imgWrap img{width:100%;height:240px;object-fit:cover;display:block}
+    .imgWrap p{padding:10px 10px 12px;color:var(--fg);font-weight:900;text-align:center;}
+
+    .imgFallback{
+      display:none;
+      padding:22px 14px;
+      text-align:center;
+      color:var(--muted);
+    }
+    .imgFallback a{
+      display:inline-flex;
+      margin-top:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      text-decoration:none;
+      border:1px solid var(--glass-border);
+      background:var(--card-bg-strong);
+      color:#6a2e4a;
+      box-shadow:0 8px 20px var(--shadow);
     }
 
     .gallery{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:16px;
-      margin-top:20px;
+      gap:16px;margin-top:20px;
     }
     .work{
-      border-radius:12px;
-      overflow:hidden;
+      border-radius:12px;overflow:hidden;
       box-shadow:0 6px 16px var(--shadow);
       transition:transform .25s ease, box-shadow .25s ease;
+      border:1px solid var(--glass-border);
+      background:var(--card-bg-strong);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     }
     .work:hover{transform:scale(1.03);box-shadow:0 10px 22px rgba(0,0,0,.12)}
     .work img{width:100%;height:220px;object-fit:cover;display:block}
-    .work p{text-align:center;padding:8px;color:var(--fg);font-weight:600;background:#fff}
+    .work p{text-align:center;padding:8px;color:var(--fg);font-weight:700;background:transparent}
 
     .social{text-align:center;margin-top:20px}
     .social a{
       display:inline-flex;align-items:center;gap:10px;
-      text-decoration:none;color:#c13584;font-weight:700;
-      padding:10px 14px;border-radius:999px;border:1px solid #f2e6ee;
-      background:#fff;box-shadow:0 6px 18px var(--shadow);
+      text-decoration:none;color:#c13584;font-weight:900;
+      padding:10px 14px;border-radius:999px;
+      border:1px solid var(--glass-border);
+      background:var(--card-bg);
+      box-shadow:0 6px 18px var(--shadow);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     }
     .social a img{width:24px;height:24px}
 
+    /* FAB WhatsApp: SOLO LOGO (sin círculo atrás) */
     .wa-fab{
       position:fixed;right:16px;bottom:16px;z-index:10;
-      width:60px;height:60px;border-radius:50%;
-      background:var(--whatsapp);display:flex;align-items:center;justify-content:center;
-      box-shadow:0 10px 24px rgba(37,211,102,.35);
-      transition:transform .15s ease;
+      width:60px;height:60px;
+      display:flex;align-items:center;justify-content:center;
+      background:transparent;
+      border:0;
+      box-shadow:none;
+      border-radius:0;
+      text-decoration:none;
+      -webkit-tap-highlight-color: transparent;
     }
     .wa-fab:hover{transform:scale(1.05)}
-    .wa-fab img{width:32px;height:32px}
+    .wa-fab svg{
+      width:46px;height:46px;
+      color: var(--whatsapp);
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.18));
+    }
 
     footer{text-align:center;color:var(--muted);padding:26px 10px 40px;font-size:14px}
+    footer a{color:var(--muted);text-decoration:none;font-weight:900}
+    footer a:hover{text-decoration:underline}
+
+    @media (max-width: 520px){
+      header{ background-size: 100% auto; }
+      .logo-img{ width:260px;height:260px; }
+      .logo{ font-size:56px; }
+    }
   </style>
 </head>
 <body>
 
   <header>
     <div class="glitter">
-      <div class="spark"></div>
-      <div class="spark"></div>
-      <div class="spark"></div>
-      <div class="spark"></div>
-      <div class="spark"></div>
-      <div class="spark"></div>
+      <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+      <div class="spark"></div><div class="spark"></div><div class="spark"></div>
     </div>
 
     <img class="logo-img" src="https://iili.io/Kg7MF9I.md.jpg" alt="Adda Nails logo">
@@ -260,12 +400,11 @@
     <div class="logo">Adda Nails</div>
     <p class="sub">Beauty Studio 💅✨</p>
 
-    <!-- Textos promocionales con emojis -->
     <div class="promo-text">✨ Cuidá tus manos con estilo 💖</div>
     <div class="promo-text" style="animation-delay:2.0s;">💅 Soft Gel, Kapping y más 💫</div>
     <div class="promo-text" style="animation-delay:5s;">📲 Reservá tu turno hoy y brillá!🥳</div>
 
-    <a class="cta" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank">💬 Reservá tu turno</a>
+    <a class="cta" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank" rel="noopener">💬 Reservá tu turno</a>
 
     <div class="pillbox">
       <div class="pill">🕘 09:00 a 16:00 hs</div>
@@ -284,10 +423,123 @@
     </div>
 
     <div class="note">
-      
       💖 Precios accesibles y atención personalizada.
+      <br><br>
+      🚗 Servicio a domicilio(costo adicional) ❤️🌟.<br>
+    </div>
+  </section>
 
-🚗 Servicio a domicilio(costo adicional) ❤️🌟.<br>
+  <!-- PRESS ON -->
+  <section class="section" id="presson">
+    <div class="presson-head">
+      <div style="flex:1; min-width:240px;">
+        <h2 style="margin-bottom:4px;">Press On — Listas para usar 💅✨</h2>
+        <p class="presson-sub">Podés <b>comprar tu set</b> (sin turno) o <b>sumarlo al servicio</b> como extra exclusivo.</p>
+      </div>
+      <div class="badge">⭐ EXCLUSIVO • Sets personalizados</div>
+    </div>
+
+    <div class="services" style="margin-top:14px;">
+      <div class="card">
+        <h3>Comprar Press On (sin turno)</h3>
+        <p>Elegís diseño + tamaño, y coordinamos entrega/retiro. Ideal para tener uñas perfectas cuando quieras.</p>
+        <div class="presson-ctas">
+          <a class="btn btn-primary" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quiero%20comprar%20un%20set%20de%20PRESS%20ON%20%F0%9F%92%85%20%E2%9C%A8%20Me%20pas%C3%A1s%20dise%C3%B1os%20y%20talles%3F" target="_blank" rel="noopener">🛍️ Comprar Press On</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Sumarlas al servicio (combo)</h3>
+        <p>Si venís a tu turno, te armamos un set para que te lo lleves como extra: práctico, prolijo y súper cómodo.</p>
+        <div class="presson-ctas">
+          <a class="btn btn-ghost" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Tengo%20turno%20y%20quiero%20SUMAR%20PRESS%20ON%20al%20servicio%20%F0%9F%92%85%20%E2%9C%A8%20%C2%BFMe%20cont%C3%A1s%20c%C3%B3mo%20ser%C3%ADa%3F" target="_blank" rel="noopener">➕ Sumar a mi servicio</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><b>1) Elegís</b><span>Diseño, forma y largo (te paso opciones por WhatsApp).</span></div>
+      <div class="step"><b>2) Medimos</b><span>Te explico cómo tomarte la medida para que queden perfectas.</span></div>
+      <div class="step"><b>3) Te lo llevás</b><span>Set listo + guía de colocación para que te duren y se vean impecables.</span></div>
+    </div>
+
+    <div class="note" style="margin-top:14px;">
+      ✨ <b>Tip:</b> Si alguna foto no carga (hotlink bloqueado), igual podés tocar “Ver imagen”.
+    </div>
+
+    <h2 style="margin-top:22px; font-size:20px;">Sets reales 💎</h2>
+    <p class="muted" style="margin-bottom:12px;">Estos son sets reales de Press On (consultá stock y talles por WhatsApp).</p>
+
+    <div class="pressGallery">
+      <div class="imgWrap" data-img>
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/fmku2i7.jpg"
+             alt="Press On con acabado glossy en tonos suaves, look prolijo y femenino"
+             onerror="this.style.display='none'; this.closest('[data-img]').querySelector('.imgFallback').style.display='block';">
+        <div class="imgFallback">
+          No se pudo cargar la imagen 😅<br>
+          <a href="https://iili.io/fmku2i7.jpg" target="_blank" rel="noopener">Ver imagen</a>
+        </div>
+        <p>Set suave y delicado — brillo prolijo</p>
+      </div>
+
+      <div class="imgWrap" data-img>
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/fmku9Dl.jpg"
+             alt="Press On de estilo elegante con terminación limpia, look premium"
+             onerror="this.style.display='none'; this.closest('[data-img]').querySelector('.imgFallback').style.display='block';">
+        <div class="imgFallback">
+          No se pudo cargar la imagen 😅<br>
+          <a href="https://iili.io/fmku9Dl.jpg" target="_blank" rel="noopener">Ver imagen</a>
+        </div>
+        <p>Set elegante — terminado premium</p>
+      </div>
+
+      <div class="imgWrap" data-img>
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/fmkudVS.jpg"
+             alt="Press On con diseño llamativo y detalles, ideal para ocasiones especiales"
+             onerror="this.style.display='none'; this.closest('[data-img]').querySelector('.imgFallback').style.display='block';">
+        <div class="imgFallback">
+          No se pudo cargar la imagen 😅<br>
+          <a href="https://iili.io/fmkudVS.jpg" target="_blank" rel="noopener">Ver imagen</a>
+        </div>
+        <p>Set destacado — ideal para evento</p>
+      </div>
+
+      <div class="imgWrap" data-img>
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/fmkTyN4.jpg"
+             alt="Press On en tonos nude con detalles delicados y acabado brillante, look clean"
+             onerror="this.style.display='none'; this.closest('[data-img]').querySelector('.imgFallback').style.display='block';">
+        <div class="imgFallback">
+          No se pudo cargar la imagen 😅<br>
+          <a href="https://iili.io/fmkTyN4.jpg" target="_blank" rel="noopener">Ver imagen</a>
+        </div>
+        <p>Nude clean — delicadas y brillantes</p>
+      </div>
+
+      <div class="imgWrap" data-img>
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/fmkuFf9.jpg"
+             alt="Press On moderno con terminación prolija, ideal para todos los días"
+             onerror="this.style.display='none'; this.closest('[data-img]').querySelector('.imgFallback').style.display='block';">
+        <div class="imgFallback">
+          No se pudo cargar la imagen 😅<br>
+          <a href="https://iili.io/fmkuFf9.jpg" target="_blank" rel="noopener">Ver imagen</a>
+        </div>
+        <p>Moderno y prolijo — look diario</p>
+      </div>
+
+      <div class="imgWrap" data-img>
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/fmkuKle.jpg"
+             alt="Press On premium con efecto llamativo y acabado profesional"
+             onerror="this.style.display='none'; this.closest('[data-img]').querySelector('.imgFallback').style.display='block';">
+        <div class="imgFallback">
+          No se pudo cargar la imagen 😅<br>
+          <a href="https://iili.io/fmkuKle.jpg" target="_blank" rel="noopener">Ver imagen</a>
+        </div>
+        <p>Premium llamativo — terminado pro</p>
+      </div>
+    </div>
+
+    <div class="presson-ctas" style="margin-top:14px;">
+      <a class="btn btn-primary" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Vi%20los%20PRESS%20ON%20en%20la%20web%20%F0%9F%92%85%20%E2%9C%A8%20%C2%BFMe%20pas%C3%A1s%20disponibles%20y%20c%C3%B3mo%20me%20tomo%20las%20medidas%3F" target="_blank" rel="noopener">💬 Consultar Press On</a>
     </div>
   </section>
 
@@ -297,36 +549,43 @@
 
     <div class="gallery">
       <div class="work">
-        <img src="https://iili.io/KgxuOXf.md.jpg" alt="Soft Gel">
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/KgxuOXf.md.jpg" alt="Soft Gel">
         <p>Soft Gel</p>
       </div>
       <div class="work">
-        <img src="https://iili.io/Kgx1opp.md.jpg" alt="Kapping Gel">
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/Kgx1opp.md.jpg" alt="Kapping Gel">
         <p>Kapping Gel</p>
       </div>
       <div class="work">
-        <img src="https://iili.io/KgxXrPI.md.jpg" alt="Semipermanente">
+        <img loading="lazy" referrerpolicy="no-referrer" src="https://iili.io/KgxXrPI.md.jpg" alt="Semipermanente">
         <p>Semipermanente</p>
       </div>
     </div>
 
     <div class="social">
-      <a href="https://www.instagram.com/addanails__?igsh=MWNuZzdmYXo3Njd5Mw==" target="_blank">
+      <a href="https://www.instagram.com/addanails__?igsh=MWNuZzdmYXo3Njd5Mw==" target="_blank" rel="noopener">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
         Seguime para ver todos mis trabajos 🙌🏻✨
       </a>
     </div>
   </section>
 
-  <a class="wa-fab" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  <!-- WhatsApp flotante SOLO logo -->
+  <a class="wa-fab" href="https://wa.me/5491123008455?text=Hola%20Adda!%20Quisiera%20consultar%20por%20un%20turno%20%F0%9F%92%85" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+    </svg>
   </a>
 
   <footer>
     © <span id="year"></span> Adda Nails — Beauty Studio
-    <div style="margin-top:6px;">Diseño web https://CIBORG347.onrender.com</div>
+    <div style="margin-top:6px;">
+      <a href="https://ciborg347.onrender.com" target="_blank" rel="noopener">Creado y diseñado por Ciborg 347</a>
+    </div>
   </footer>
 
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
